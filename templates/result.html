@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Results | PhishAware</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <p class="eyebrow">TRAINING COMPLETE</p>
+        <h1>Your results</h1>
+        <p class="score">{{ score }} / {{ total }}</p>
+        <p>{{ percentage }}% correct</p>
+      </header>
+
+      {% for item in feedback %}
+      <section class="email-card">
+        <h2>{{ item.subject }}</h2>
+
+        <p>
+          Your answer:
+          <strong>{{ item.selected }}</strong>
+        </p>
+
+        <p>
+          Correct answer:
+          <strong>{{ item.answer }}</strong>
+        </p>
+
+        <p class="{{ 'success' if item.correct else 'review' }}">
+          {{ 'Correct!' if item.correct else 'Review this scenario.' }}
+        </p>
+
+        <p>{{ item.reason }}</p>
+      </section>
+      {% endfor %}
+
+      <a class="button-link" href="{{ url_for('index') }}"> Try again </a>
+    </main>
+  </body>
+</html>

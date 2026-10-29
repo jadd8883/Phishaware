@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PhishAware | Awareness Training</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <p class="eyebrow">CYBERSECURITY AWARENESS</p>
+        <h1>PhishAware</h1>
+        <p>Can you identify a suspicious message?</p>
+        <p class="notice">Educational simulation — fictional examples only.</p>
+      </header>
+
+      <form action="{{ url_for('submit') }}" method="POST">
+        {% for email in scenarios %}
+        <section class="email-card">
+          <p class="eyebrow">SCENARIO {{ loop.index }}</p>
+          <h2>{{ email.subject }}</h2>
+
+          <p><strong>From:</strong> {{ email.sender }}</p>
+          <p>{{ email.body }}</p>
+
+          <fieldset>
+            <legend>Classify this message</legend>
+
+            <label>
+              <input
+                type="radio"
+                name="answer_{{ email.id }}"
+                value="phishing"
+                required
+              />
+              Phishing / suspicious
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="answer_{{ email.id }}"
+                value="legitimate"
+              />
+              Legitimate / expected
+            </label>
+          </fieldset>
+        </section>
+        {% endfor %}
+
+        <button type="submit">Submit answers</button>
+      </form>
+
+      <footer>
+        Learn to pause, verify the sender, and report suspicious messages.
+      </footer>
+    </main>
+  </body>
+</html>
